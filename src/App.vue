@@ -1,15 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <Header></Header>
+
+  <MainNav
+    :pages="pagesList"
+  ></MainNav>
+
+  <router-view></router-view>
+
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import MainNav from './components/MainNav.vue';
+import Header from './components/Header.vue';
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    MainNav,
+    Header
+  },
+  data() {
+    return {
+      pagesList: [
+        {pageName: "Workout", path: "workout"},
+        {pageName: "Exercises", path: "exercises"},
+        {pageName: "Statistics", path: "stats"},
+        {pageName: "Profile", path: "profile"}
+      ]
+    }
   }
 }
 </script>
