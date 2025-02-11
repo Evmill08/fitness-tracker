@@ -6,7 +6,9 @@
     :pages="pagesList"
   ></MainNav>
 
-  <router-view></router-view>
+  <router-view
+    :User="user"
+  ></router-view>
 
 
 </template>
@@ -15,6 +17,7 @@
 
 import MainNav from './components/MainNav.vue';
 import Header from './components/Header.vue';
+import { UserModel } from './models/models';
 
 export default {
   components: {
@@ -22,7 +25,13 @@ export default {
     Header
   },
   data() {
+
+
+
     return {
+      user: new UserModel('1', 'JohnDoe', 70, 80, 'john@example.com', [], {}),
+
+
       pagesList: [
         {pageName: "Login", path: "login"},
         {pageName: "Workout", path: "workout"},

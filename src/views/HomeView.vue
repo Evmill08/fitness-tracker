@@ -1,5 +1,5 @@
 <template>
-    <body :class="$style.container">
+    <div :class="$style.container">
         <router-link :to="`/profile`" :class="$style.userInfoLink">
             <div :class="$style.userInfo">
                 <h1>{{ User.username }}</h1>
@@ -23,11 +23,12 @@
                 </ul>
             </div>
         </div>
-    </body>
+    </div>
 </template>
 
 <script>
-import { UserModel } from '@/models/models';
+
+    import { UserModel } from '@/models/models';
 
     export default {
         props: {
@@ -52,10 +53,48 @@ import { UserModel } from '@/models/models';
 </script>
 
 <style module>
-.header{
+.container{
+    width: 82.5%;
+    height: 90%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    color: black
+    left: 19.25%;
+    top: 10%;
+    background-color: rgb(17, 17, 17);
 }
+
+.userInfoLink{
+    text-decoration: none;
+    color: #F4FFFD;
+    width: 15%;
+    font-size: 6pt;
+    display: flex;
+    background-color: rgba(18, 41, 43);
+    border-radius: 15px;
+    position: absolute;
+    left: 2.5%;
+    top: 2.5%;
+    padding: 8px;
+}
+
+.userInfoLink:hover{
+    background-color:  rgb(42, 81, 85) ;
+}
+
+.monthTrack{
+    position: absolute;
+    width: 80%;
+    top: 20%;
+    left: 10%;
+    background-color: rgba(18, 41, 43);
+    border-radius: 30px;
+}
+
+ul{
+    list-style: none;
+    display: inline;
+}
+
+
+
+
 </style>
