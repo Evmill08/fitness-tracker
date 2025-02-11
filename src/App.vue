@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       pagesList: [
+        {pageName: "Login", path: "login"},
         {pageName: "Workout", path: "workout"},
         {pageName: "Exercises", path: "exercises"},
         {pageName: "Statistics", path: "stats"},
