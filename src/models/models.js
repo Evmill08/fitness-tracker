@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class UserModel {
     constructor( id, username, email, weight = 0, height = 0, workoutHistory = [], personalBests = {}) {
         this.id = id;
@@ -8,6 +10,11 @@ export class UserModel {
         this.bmr_factor = (this.weight*10 + this.height*6.25) / 24 / 60;
         this.workoutHistory = workoutHistory;
         this.personalBests = personalBests;
+    }
+
+    createUser(email, username, height, weight){
+        uid = uuidv4();
+        return UserModel(uid, username, email, weight, height, [], {});
     }
 
     addWorkout(workout) {

@@ -9,7 +9,7 @@ import ProfileView from "./views/ProfileView.vue";
 const router = createRouter({
     history: createWebHashHistory(),
     routes: [
-        {path: "/", component: HomeView},
+        {path: "/", component: HomeView, props: true},
         {path: "/login", component: LoginView},
         {path: "/exercises", component: ExercisesView},
         {path: "/workout", component: WorkoutView},

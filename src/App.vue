@@ -29,7 +29,6 @@ export default {
     return {
       user: new UserModel('1', 'JohnDoe', 70, 80, 'john@example.com', [], {}),
 
-
       pagesList: [
         {pageName: "Login", path: "login"},
         {pageName: "Workout", path: "workout"},

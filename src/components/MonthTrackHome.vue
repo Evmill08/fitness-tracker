@@ -28,13 +28,19 @@ import { UserModel } from '@/models/models';
                 requied: true,
             }
         }, 
+        created() {
+            workoutLength = this.User.workoutHistory.length;
+            workoutTime = this.User.calculateTotalTime();
+            workoutCalories = this.User.calculateTotalCalories(this.User.bmr_factor);
+            workoutWeight = this.User.calculateTotalWeight();
+        },
         data(){
             return {
                 stats: [
-                    {statName: "Workouts", stat: this.User.workoutHistory.length},
-                    {statName: "Time", stat: this.User.calculateTotalTime()},
-                    {statName: "Calories", stat: this.User.calculateTotalCalories(this.User.bmr_factor)},
-                    {statName: "Weight", stat:  this.User.calculateTotalWeight()},
+                    {statName: "Workouts", stat: this.workoutLength},
+                    {statName: "Time", stat: this.workoutTime},
+                    {statName: "Calories", stat: this.workoutCalories},
+                    {statName: "Weight", stat:  this.workoutWeight},
                 ]
             }
         },
