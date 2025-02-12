@@ -33,14 +33,7 @@
 </script>
 
 <style scoped>
-.container{
-    width: 82.5%;
-    height: 90%;
-    position: absolute;
-    left: 19.25%;
-    top: 10%;
-    background-color: rgb(17, 17, 17);
-}
+
 
 
 

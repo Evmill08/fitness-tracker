@@ -1,21 +1,7 @@
-<!--<template>
-
-  <Header></Header>
-
-  <MainNav
-    :pages="pagesList"
-  ></MainNav>
-
-  <router-view
-    :User="user"
-  ></router-view>
-
-
-</template>-->
 
 <template>
   <div class="app-container">
-      <Header class="header" />
+      <Header class="header"></Header>
       <div class="content-wrapper">
           <MainNav :pages="pagesList" class="nav"/>
           <main class="main-content">
@@ -57,32 +43,51 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+html, body{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .app-container {
   display: grid;
-  grid-template-rows: 10vh 90vh;
+  grid-template-rows: auto 1fr;
   min-height: 100vh;
   background-color: rgb(17, 17, 17);
+  width: 100%;
+  height: 100%;
+  font-family: "PT Serif", serif;
 }
 
 .header {
   grid-row: 1;
-  width: 100%;
+  width: auto;
   background-color: rgb(29, 29, 29);
   z-index: 10;
+  overflow: hidden;
+  justify-content: center;
 }
 
 .content-wrapper {
   grid-row: 2;
   display: grid;
   grid-template-columns: 17.5% 82.5%;
+  flex: 1;
   height: 100%;
+  overflow: hidden;
+
 }
 
 .nav {
   grid-column: 1;
   background-color: rgba(18, 41, 43);
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .main-content {
@@ -91,5 +96,7 @@ export default {
   position: relative;
   overflow-y: auto;
   padding: 20px;
+  overflow: hidden;
 }
+
 </style>

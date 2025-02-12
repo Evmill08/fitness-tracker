@@ -31,24 +31,23 @@
 
 .user-profile-link{
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 2%;
+    left: 2%;
     background-color: rgba(18, 41, 43);
     border-radius: 15px;
-    padding: 0.5rem 1rem;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
     text-decoration: none;
     color: #F4FFFD;
     transition: background-color 0.3s ease;
+    font-size: 8pt;
 }
 
-/* Ensure hover effect remains */
 .user-profile-link:hover {
     background-color: rgb(42, 81, 85);
 }
 
-/* Layout: Image (left) | Username (right) */
 .user-info {
     display: flex;
     align-items: center;

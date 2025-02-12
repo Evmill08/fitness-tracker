@@ -43,6 +43,7 @@
     text-decoration: none;
     font-size: 1.25rem;
     transition: background-color 0.3s ease;
+    margin-bottom: 2.5%;
 }
 
 .nav-link:hover {

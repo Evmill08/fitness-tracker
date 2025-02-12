@@ -44,11 +44,15 @@ import { UserModel } from '@/models/models';
 
 .month-track {
     margin: 2rem auto;
-    width: 90%;
+    margin-top: 10%;
+    width: 80%;
     background-color: rgba(18, 41, 43, 0.95);
     border-radius: 30px;
     padding: 2rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    align-items: center;
+
 }
 
 .month-title {
@@ -66,7 +70,7 @@ import { UserModel } from '@/models/models';
 }
 
 .workout-stats {
-    width: 100%;
+    width: 90%;
     padding: 5%;
     border-radius: 20px;
     transition: background-color 0.4s ease, box-shadow 0.3s ease;
