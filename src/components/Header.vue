@@ -1,6 +1,6 @@
 <template>
-    <div :class="$style.container">
-    <router-link :to="'/'" :class="$style.headerText">
+    <div class="header-container">
+    <router-link :to="'/'" class="header-link">
         <h1>Fitness Tracker</h1>
     </router-link>
 </div>
@@ -13,22 +13,17 @@ export default{
 }
 </script>
 
-<style module>
-.container{
-    width: 100%;
-    height: 10%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-color: rgb(29, 29, 29);
-
+<style scoped>
+.header-container{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
 }
 
-.headerText{
+.header-link{
     text-decoration: none;
     color: #F4FFFD;
-    justify-content: center;
-    align-items: center;
 }
 
 

@@ -1,4 +1,4 @@
-<template>
+<!--<template>
 
   <Header></Header>
 
@@ -11,6 +11,18 @@
   ></router-view>
 
 
+</template>-->
+
+<template>
+  <div class="app-container">
+      <Header class="header" />
+      <div class="content-wrapper">
+          <MainNav :pages="pagesList" class="nav"/>
+          <main class="main-content">
+              <router-view :User="user"></router-view>
+          </main>
+      </div>
+  </div>
 </template>
 
 <script>
@@ -45,12 +57,39 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.app-container {
+  display: grid;
+  grid-template-rows: 10vh 90vh;
+  min-height: 100vh;
+  background-color: rgb(17, 17, 17);
+}
+
+.header {
+  grid-row: 1;
+  width: 100%;
+  background-color: rgb(29, 29, 29);
+  z-index: 10;
+}
+
+.content-wrapper {
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 17.5% 82.5%;
+  height: 100%;
+}
+
+.nav {
+  grid-column: 1;
+  background-color: rgba(18, 41, 43);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.main-content {
+  grid-column: 2;
+  background-color: rgb(17, 17, 17);
+  position: relative;
+  overflow-y: auto;
+  padding: 20px;
 }
 </style>

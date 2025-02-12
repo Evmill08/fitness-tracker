@@ -5,6 +5,7 @@ export class UserModel {
         this.email = email;
         this.weight = weight;
         this.height = height;
+        this.bmr_factor = (this.weight*10 + this.height*6.25) / 24 / 60;
         this.workoutHistory = workoutHistory;
         this.personalBests = personalBests;
     }
@@ -18,15 +19,34 @@ export class UserModel {
     }
 
     calculateTotalCalories() {
-        return;
+        if (this.workoutHistory.length == 0 ){
+            return 0;
+        }
+
+        return this.workoutHistory.reduce((total, workout) => {
+            return total + workout.calculateWorkoutCalories(this.bmr_factor);
+        }, 0);
     }
 
     calculateTotalTime() {
-        return;
+        if (this.workoutHistory.length == 0 ){
+            return 0;
+        }
+
+        return this.workoutHistory.reduce((total, workout) => {
+            return total + workout.duration;
+        }, 0);
     }
 
+    // In minutes currently, will have to change to seconds then convert to HH:MM:SS
     calculateTotalWeight() {
-        return;
+        if (this.workoutHistory.length == 0 ){
+            return 0;
+        }
+
+        return this.workoutHistory.reduce((total, workout) => {
+            return total + workout.calculateTotalVolume();
+        }, 0);
     }
 }
 
@@ -49,6 +69,10 @@ export class WorkoutModel {
     }
 
     calculateTotalVolume() {
+        if (this.exercises.length == 0 ){
+            return 0;
+        }
+
         return this.exercises.reduce((total, exercise) => {
             return total + exercise.sets.reduce((setTotal, set) => {
                 return setTotal + (set.weight * set.reps);
@@ -62,8 +86,24 @@ export class WorkoutModel {
         );
     }
 
-    calculateWorkoutCalories() {
-        return;
+    calculateWorkoutCalories(bmr_factor) {
+        if (this.exercises.length == 0 ){
+            return 0;
+        }
+
+        const exerciseCalories = this.exercises.reduce((total, exercise) => {
+            return total + exercise.calculateCalories(bmr_factor);
+        }, 0);
+
+        //Excess Post-Exercise Oxygen Consumption to be added for a workout
+        const averageIntensity = this.exercises.reduce((total, exercise) => {
+            const exerciseRPE = exercise.sets.reduce((rpeTotal, set) => rpeTotal + (set.rpe || 0), 0) / exercise.sets.length;
+            return total + exerciseRPE;
+        }, 0) / this.exercises.length;
+
+        const epocFactor = 1 + (averageIntensity / 10) * .2;
+
+        return Math.round(exerciseCalories * epocFactor);
     }
 }
 
@@ -102,8 +142,24 @@ export class ExerciseModel {
         return Math.max(...this.sets.map(set => set.weight));
     }
 
-    calculateCalories() {
-        return;
+    calculateCalories(bmr_factor) {
+        if (this.sets.length == 0 ){
+            return 0;
+        }
+
+        return this.sets.reduce((totalCalories, set) => {
+            if (!set.completed) {return totalCalories}
+
+            const baseCalories = bmr_factor * 0.1 * set.weight / 30;
+
+            const intensityMultiplier = Math.pow((set.rpe || 5) / 5, 1.5);
+
+            const durationFactor = set.reps * 0.1;
+
+            const setCalories = baseCalories * intensityMultiplier * durationFactor;
+
+            return totalCalories + setCalories;
+        }, 0);
     }
 }
 
