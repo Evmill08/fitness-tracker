@@ -16,7 +16,7 @@
 <style scoped>
 .user-profile-link {
     position: fixed;
-    top: 16%;
+    top: 15.5%;
     left: 19%;
     background-color: rgba(18, 41, 43);
     border-radius: 8px;

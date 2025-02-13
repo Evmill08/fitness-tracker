@@ -1,10 +1,9 @@
 <template>
     <div class="header-container">
-    <router-link :to="'/'" class="header-link">
-        <h1>Fitness Tracker</h1>
-    </router-link>
-</div>
-
+        <router-link :to="'/'" class="header-link">
+            <h1>Fitness Tracker</h1>
+        </router-link>
+    </div>
 </template>
 
 <script>

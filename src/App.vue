@@ -1,11 +1,11 @@
-
 <template>
   <div class="app-container">
       <Header class="header"></Header>
       <div class="content-wrapper">
           <MainNav :pages="pagesList" class="nav"/>
           <main class="main-content">
-              <router-view :User="user"></router-view>
+              <router-view v-if="isAuthenticated"></router-view>
+              <LoginView v-else />
           </main>
       </div>
   </div>
@@ -15,29 +15,32 @@
 
 import MainNav from './components/MainNav.vue';
 import Header from './components/Header.vue';
-import { UserModel } from './models/models';
+import { useUserStore } from './store/user_store';
+import LoginView from './views/LoginView.vue';
+import { computed } from 'vue';
 
 export default {
   components: {
     MainNav,
-    Header
+    Header,
+    LoginView
   },
-  data() {
-
-
+  setup () {
+    const userStore = useUserStore();
+    const isAuthenticated = computed(() => userStore.user != null);
 
     return {
-      user: new UserModel('1', 'JohnDoe', 70, 80, 'john@example.com', [], {}),
-
+      isAuthenticated,
       pagesList: [
-        {pageName: "Login", path: "login"},
         {pageName: "Workout", path: "workout"},
         {pageName: "Exercises", path: "exercises"},
         {pageName: "Statistics", path: "stats"},
         {pageName: "Profile", path: "profile"}
       ]
     }
-  }
+  },
+
+  
 }
 </script>
 
@@ -55,7 +58,7 @@ html, body{
 
 .app-container {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 90vh 10vh;
   min-height: 100vh;
   background-color: rgb(17, 17, 17);
   width: 100%;

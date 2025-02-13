@@ -53,6 +53,7 @@
 
 <script>
     import {UserModel } from '@/models/models';
+    import { useUserStore } from '@/store/user_store';
     export default{
         computed: {
             isFormInvalid() {
@@ -66,6 +67,7 @@
                 username: "",
                 userWeight: "",
                 userHeight: "",
+                userStore: useUserStore(),
             }
         },
         
@@ -91,8 +93,8 @@
                 return "";
             },
             
-            sendToHome(User){
-                this.$router.push({name: '/', params: {User: User}});
+            sendToHome(){
+                this.$router.push('/');
             },
 
             submitInfo() {
@@ -101,15 +103,23 @@
                     return;
                 }
 
-                if (this.validateInfo() != ""){
-                    alert("Please fill the form correctly. Issue: ", this.validateInfo());
+                const validationMessage = this.validateInfo();
+                if (validationMessage) {
+                    alert(`Please fill the form correctly. Issue: ${validationMessage}`);
                     return;
                 }
 
-                // First check if store already has a user
-                let User = UserModel.createUser(this.userEmail, this.username, this.userWeight, this.userHeight);
+                if (this.userStore.user){
+                    alert("User already created. Wipe User?");
+                    // Implement a wipe user feature
+                    return;
+                }
 
-                this.sendToHome(User);
+                let userModel = new UserModel();
+                let User = userModel.createUser(this.userEmail, this.username, this.userWeight, this.userHeight);
+                this.userStore.signIn(User);
+
+                this.sendToHome();
 
                 this.userEmail = "";
                 this.username = "";
@@ -125,6 +135,7 @@
     margin: 2rem auto;
     margin-top: 10%;
     width: 80%;
+    height: 80%;
     max-width: 600px;
     background-color: rgba(18, 41, 43, 0.95);
     border-radius: 30px;
@@ -156,10 +167,11 @@ ul {
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    margin-left: 1%;
 }
 
 .form-control {
-    width: 100%;
+    width: 90%;
     padding: 1rem;
     background-color: rgba(255, 255, 255, 0.1);
     border: none;

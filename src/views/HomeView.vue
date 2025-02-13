@@ -1,9 +1,9 @@
 <template>
     <div class="container">
 
-        <HomeProfileLink :username="User.username"></HomeProfileLink>
+        <HomeProfileLink :username="user?.username"></HomeProfileLink>
         
-        <MonthTrackHome :User="User"></MonthTrackHome>
+        <MonthTrackHome></MonthTrackHome>
 
         
     </div>
@@ -13,20 +13,23 @@
 
     import HomeProfileLink from '@/components/HomeProfileLink.vue';
     import MonthTrackHome from '@/components/MonthTrackHome.vue';
-    import { UserModel } from '@/models/models';
+    import { useUserStore } from '@/store/user_store';
+    import { storeToRefs } from 'pinia';
+
 
     export default {
         components: {
             MonthTrackHome,
             HomeProfileLink
         },
-        props: {
-            User: {
-                type: UserModel,
-                required: true,
+        data() {
+            const userStore = useUserStore();
+            const {user} = storeToRefs(userStore);
+
+            return {
+                user: user
             }
-        },
-        
+        }   
     }
     
 
@@ -34,12 +37,12 @@
 
 <style scoped>
 .container {
-    width: 150%;
+    width: 100%;
     height: 100%;
     padding: 1rem;
     box-sizing: border-box;
     position: relative;
-    overflow: hidden;
+    
     background-color: rgb(17, 17, 17);
 }
 </style>

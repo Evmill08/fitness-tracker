@@ -19,33 +19,31 @@
 </template>
 
 <script>
-import { UserModel } from '@/models/models';
+    import { useUserStore } from '@/store/user_store';
+    import { mapState } from 'pinia';
 
     export default{
-        props: {
-            User: {
-                type: UserModel,
-                requied: true,
-            }
-        }, 
-        
-        data(){
+        computed: {
+            ...mapState(useUserStore, ['user']),
+            stats() {
+                if (!this.user) return [];
 
-            const workoutLength = this.User.workoutHistory.length;
-            const workoutTime = this.User.calculateTotalTime();
-            const workoutCalories = this.User.calculateTotalCalories(this.User.bmr_factor);
-            const workoutWeight = this.User.calculateTotalWeight();
+                try {
+                    return [
+                        { statName: "Workouts", stat: this.user.workoutHistory.length },
+                        { statName: "Time", stat: this.user.calculateTotalTime() },
+                        { statName: "Calories", stat: this.user.calculateTotalCalories(this.user.bmr_factor) },
+                        { statName: "Weight", stat: this.user.calculateTotalWeight() },
+                ];
 
-            return {
-                stats: [
-                    {statName: "Workouts", stat: workoutLength},
-                    {statName: "Time", stat: workoutTime},
-                    {statName: "Calories", stat: workoutCalories},
-                    {statName: "Weight", stat:  workoutWeight},
-                ]
+                } catch (error){
+                    console.error("Error calculating stats: ", error);
+                    return [];
+                }
             }
-        },
+        }
     }
+
 </script>
 <style scoped>
 
@@ -92,7 +90,7 @@ import { UserModel } from '@/models/models';
 
 .stat-item {
     flex: 1;
-    max-width: 200px;
+    max-width: 100px;
     min-width: 150px;
 }
 

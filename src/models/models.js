@@ -12,9 +12,14 @@ export class UserModel {
         this.personalBests = personalBests;
     }
 
-    createUser(email, username, height, weight){
-        let uid = uuidv4();
-        return UserModel(uid, username, email, weight, height, [], {});
+    createUser(email, username, height = 0, weight = 0){
+        return new UserModel(
+            uuidv4(),
+            username,
+            email,
+            weight,
+            height
+        );
     }
 
     addWorkout(workout) {
