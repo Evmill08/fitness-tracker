@@ -8,6 +8,7 @@
                     type="text"
                     class="form-control"
                     v-model="userEmail"
+                    placeholder="Email"
                 />
             </li>
 
@@ -17,6 +18,7 @@
                     type="text"
                     class="form-control"
                     v-model="username"
+                    placeholder="Username"
                 />
             </li>
 
@@ -26,6 +28,7 @@
                     type="text"
                     class="form-control"
                     v-model="userHeight"
+                    placeholder="Height (Optional)"
                 />
             </li>
             
@@ -35,6 +38,7 @@
                     type="text"
                     class="form-control"
                     v-model="userWeight"
+                    placeholder="Weight (Optional)"
                 />
             </li>
 
@@ -48,7 +52,7 @@
 </template>
 
 <script>
-    import {createUser } from '@/models/models';
+    import {UserModel } from '@/models/models';
     export default{
         computed: {
             isFormInvalid() {
@@ -66,28 +70,6 @@
         },
         
         methods: {
-            submitInfo() {
-                if (!this.userEmail || !this.username){
-                    alert("Please fill out the form.");
-                    return;
-                }
-
-                if (validateInfo() != ""){
-                    alert("Please fill the form correctly. Issue: ", validateInfo());
-                    return;
-                }
-
-                User = createUser(this.userEmail, this.username, this.userWeight, this.userHeight);
-
-                sendToHome(User);
-
-                this.userEmail = "";
-                this.username = "";
-                this.userWeight = "";
-                this.userHeight ="";
-            },
-
-            
             validateInfo() {
                 let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 if (!regex.test(this.userEmail)){
@@ -111,13 +93,115 @@
             
             sendToHome(User){
                 this.$router.push({name: '/', params: {User: User}});
-            }
+            },
+
+            submitInfo() {
+                if (!this.userEmail || !this.username){
+                    alert("Please fill out the form.");
+                    return;
+                }
+
+                if (this.validateInfo() != ""){
+                    alert("Please fill the form correctly. Issue: ", this.validateInfo());
+                    return;
+                }
+
+                // First check if store already has a user
+                let User = UserModel.createUser(this.userEmail, this.username, this.userWeight, this.userHeight);
+
+                this.sendToHome(User);
+
+                this.userEmail = "";
+                this.username = "";
+                this.userWeight = "";
+                this.userHeight ="";
+            },
         }
     }
 </script>
 
 <style scope>
-.container{
+.container {
+    margin: 2rem auto;
+    margin-top: 10%;
+    width: 80%;
+    max-width: 600px;
+    background-color: rgba(18, 41, 43, 0.95);
+    border-radius: 30px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+h1 {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.text-input {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    color: #64ffda;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.form-control {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    background-color: #64ffda;
+    color: rgba(18, 41, 43, 0.95);
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(100, 255, 218, 0.2);
+}
+
+.login-btn:disabled {
+    background-color: rgba(100, 255, 218, 0.5);
+    cursor: not-allowed;
+}
+
+/* Optional: Add placeholder styling */
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
 }
 </style>

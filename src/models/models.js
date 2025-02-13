@@ -13,7 +13,7 @@ export class UserModel {
     }
 
     createUser(email, username, height, weight){
-        uid = uuidv4();
+        let uid = uuidv4();
         return UserModel(uid, username, email, weight, height, [], {});
     }
 

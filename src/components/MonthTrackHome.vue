@@ -29,10 +29,10 @@ import { UserModel } from '@/models/models';
             }
         }, 
         created() {
-            workoutLength = this.User.workoutHistory.length;
-            workoutTime = this.User.calculateTotalTime();
-            workoutCalories = this.User.calculateTotalCalories(this.User.bmr_factor);
-            workoutWeight = this.User.calculateTotalWeight();
+            this.workoutLength = this.User.workoutHistory.length;
+            this.workoutTime = this.User.calculateTotalTime();
+            this.workoutCalories = this.User.calculateTotalCalories(this.User.bmr_factor);
+            this.workoutWeight = this.User.calculateTotalWeight();
         },
         data(){
             return {
