@@ -33,8 +33,13 @@
 </script>
 
 <style scoped>
-
-
-
-
+.container {
+    width: 150%;
+    height: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(17, 17, 17);
+}
 </style>

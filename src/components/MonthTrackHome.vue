@@ -28,19 +28,20 @@ import { UserModel } from '@/models/models';
                 requied: true,
             }
         }, 
-        created() {
-            this.workoutLength = this.User.workoutHistory.length;
-            this.workoutTime = this.User.calculateTotalTime();
-            this.workoutCalories = this.User.calculateTotalCalories(this.User.bmr_factor);
-            this.workoutWeight = this.User.calculateTotalWeight();
-        },
+        
         data(){
+
+            const workoutLength = this.User.workoutHistory.length;
+            const workoutTime = this.User.calculateTotalTime();
+            const workoutCalories = this.User.calculateTotalCalories(this.User.bmr_factor);
+            const workoutWeight = this.User.calculateTotalWeight();
+
             return {
                 stats: [
-                    {statName: "Workouts", stat: this.workoutLength},
-                    {statName: "Time", stat: this.workoutTime},
-                    {statName: "Calories", stat: this.workoutCalories},
-                    {statName: "Weight", stat:  this.workoutWeight},
+                    {statName: "Workouts", stat: workoutLength},
+                    {statName: "Time", stat: workoutTime},
+                    {statName: "Calories", stat: workoutCalories},
+                    {statName: "Weight", stat:  workoutWeight},
                 ]
             }
         },
@@ -50,15 +51,11 @@ import { UserModel } from '@/models/models';
 
 .month-track {
     margin: 2rem auto;
-    margin-top: 10%;
-    width: 80%;
+    width: 100%;
     background-color: rgba(18, 41, 43, 0.95);
     border-radius: 30px;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    justify-content: center;
-    align-items: center;
-
+    box-sizing: border-box;
 }
 
 .month-title {
@@ -66,7 +63,7 @@ import { UserModel } from '@/models/models';
     font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .workout-stats-link {
@@ -76,10 +73,11 @@ import { UserModel } from '@/models/models';
 }
 
 .workout-stats {
-    width: 90%;
-    padding: 5%;
+    width: 100%;
+    padding: 1rem;
     border-radius: 20px;
     transition: background-color 0.4s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
 }
 
 .workout-stats ul {
@@ -87,19 +85,21 @@ import { UserModel } from '@/models/models';
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 1rem;
     width: 100%;
 }
 
 .stat-item {
     flex: 1;
-    padding: 0 1rem;
+    max-width: 200px;
+    min-width: 150px;
 }
 
 .stat-container {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 15px;
-    padding: 1.5rem;
+    padding: 1rem;
     text-align: center;
     transition: transform 0.4s ease, box-shadow 0.2s ease;
 }
@@ -118,14 +118,14 @@ import { UserModel } from '@/models/models';
 
 .stat-name {
     color: #64ffda;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     margin: 0 0 0.5rem 0;
     font-weight: 600;
 }
 
 .stat-value {
     color: #ffd700;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     margin: 0;
     font-weight: bold;
 }
