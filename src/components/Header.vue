@@ -17,7 +17,7 @@ export default{
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 2rem;
+    padding-top: .25rem
 }
 
 .header-link{

@@ -116,7 +116,9 @@
                 }
 
                 let userModel = new UserModel();
-                let User = userModel.createUser(this.userEmail, this.username, this.userWeight, this.userHeight);
+                const userID = userModel.id;
+                
+                let User = userModel.createUser(userID, this.userEmail, this.username, this.userWeight, this.userHeight);
                 this.userStore.signIn(User);
 
                 this.sendToHome();

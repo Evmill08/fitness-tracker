@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export class UserModel {
-    constructor( id, username, email, weight = 0, height = 0, workoutHistory = [], personalBests = {}) {
+    constructor(username, email, weight = 0, height = 0, workoutHistory = [], personalBests = {}, id = uuidv4()) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -12,13 +12,15 @@ export class UserModel {
         this.personalBests = personalBests;
     }
 
-    createUser(email, username, height = 0, weight = 0){
+    createUser(id, email, username, height = 0, weight = 0) {
         return new UserModel(
-            uuidv4(),
-            username,
-            email,
-            weight,
-            height
+            username,   // username first
+            email,      // email second
+            weight,     // weight third
+            height,     // height fourth
+            [],         // empty workout history
+            {},         // empty personal bests
+            id          // pass the id last
         );
     }
 
@@ -63,7 +65,7 @@ export class UserModel {
 }
 
 export class WorkoutModel {
-    constructor(id, name, userID, exercises = [], date = new Date(), duration = 0) {
+    constructor(name, userID, exercises = [], date = new Date(), duration = 0, id = uuidv4()) {
         this.id = id;
         this.name = name;
         this.userID = userID;

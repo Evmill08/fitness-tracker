@@ -12,7 +12,7 @@ const router = createRouter({
         {path: "/", component: HomeView},
         {path: "/login", component: LoginView},
         {path: "/exercises", component: ExercisesView},
-        {path: "/workout", component: WorkoutView},
+        {path: "/workout", name: "workout", component: WorkoutView},
         {path: "/stats", component: StatsView},
         {path: "/profile", component: ProfileView},
 
