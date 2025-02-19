@@ -19,30 +19,44 @@
 </template>
 
 <script>
-    import { useUserStore } from '@/store/user_store';
-    import { mapState } from 'pinia';
+//import { UserModel } from '@/models/models';
+import { userService } from '@/services/userServices';
+import { userStore } from '@/stores/userStore';
+//import { workoutService } from '@/store/workoutService';
 
-    export default{
-        computed: {
-            ...mapState(useUserStore, ['user']),
-            stats() {
-                if (!this.user) return [];
 
-                try {
-                    return [
-                        { statName: "Workouts", stat: this.user.workoutHistory.length },
-                        { statName: "Time", stat: this.user.calculateTotalTime() },
-                        { statName: "Calories", stat: this.user.calculateTotalCalories(this.user.bmr_factor) },
-                        { statName: "Weight", stat: this.user.calculateTotalWeight() },
+export default {
+    data() {
+        return {
+            currentUser: null
+        }
+    },
+
+    async created() {
+        if (!userStore.state.currentUser) {
+            await userService.getUser()
+        }
+        this.currentUser = userStore.state.currentUser
+    },
+
+    computed: {
+        stats() {
+            if (!this.currentUser) return [];
+
+            try {
+                return [
+                    { statName: "Workouts", stat: this.currentUser.workoutHistory.length },
+                    { statName: "Time", stat: this.currentUser.calculateTotalTime() },
+                    { statName: "Calories", stat: this.currentUser.calculateTotalCalories(this.currentUser.bmr_factor) },
+                    { statName: "Weight", stat: this.currentUser.calculateTotalWeight() },
                 ];
-
-                } catch (error){
-                    console.error("Error calculating stats: ", error);
-                    return [];
-                }
+            } catch (error) {
+                console.error("Error calculating stats: ", error);
+                return [];
             }
         }
     }
+}
 
 </script>
 <style scoped>

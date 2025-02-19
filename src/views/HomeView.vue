@@ -1,11 +1,10 @@
 <template>
     <div class="container">
-
-        <HomeProfileLink :username="user?.username"></HomeProfileLink>
-        
+        <HomeProfileLink :username="currentUser?.username"></HomeProfileLink>
         <MonthTrackHome></MonthTrackHome>
-
-        <button class="start-workout-btn" :disabled="isUserValid" @click.prevent="startWorkout">Start Workout</button>
+        <button class="start-workout-btn" :disabled="!currentUser" @click.prevent="startWorkout">
+            Start Workout
+        </button>
     </div>
 </template>
 
@@ -13,28 +12,29 @@
 
     import HomeProfileLink from '@/components/HomeProfileLink.vue';
     import MonthTrackHome from '@/components/MonthTrackHome.vue';
-    import { useUserStore } from '@/store/user_store';
-    import { storeToRefs } from 'pinia';
+    import { userService } from '@/services/userServices';
+    import { userStore } from '@/stores/userStore';
 
 
     export default {
-        computed: {
-            isUserValid() {
-                return !this.user
-            }
-        },
         components: {
             MonthTrackHome,
             HomeProfileLink
         },
+        
         data() {
-            const userStore = useUserStore();
-            const {user} = storeToRefs(userStore);
-
             return {
-                user: user
+                currentUser: null
             }
         },
+
+        async created() {
+            if (!userStore.state.currentUser) {
+                await userService.getUser()
+            }
+            this.currentUser = userStore.state.currentUser
+        },
+
         methods: {
             startWorkout() {
                 this.$router.push("/workout")

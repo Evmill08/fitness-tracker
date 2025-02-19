@@ -52,13 +52,16 @@
 </template>
 
 <script>
-    import {UserModel } from '@/models/models';
-    import { useUserStore } from '@/store/user_store';
+    import { userService } from '@/services/userServices';
+    import { userID } from '@/services/firebase_config';
     export default{
         computed: {
             isFormInvalid() {
                 return !this.userEmail || !this.username
             }
+        },
+        async created() {
+            this.user = await userService.getUser()
         },
 
         data() {
@@ -67,7 +70,6 @@
                 username: "",
                 userWeight: "",
                 userHeight: "",
-                userStore: useUserStore(),
             }
         },
         
@@ -97,7 +99,7 @@
                 this.$router.push('/');
             },
 
-            submitInfo() {
+            async submitInfo() {
                 if (!this.userEmail || !this.username){
                     alert("Please fill out the form.");
                     return;
@@ -109,24 +111,17 @@
                     return;
                 }
 
-                if (this.userStore.user){
-                    alert("User already created. Wipe User?");
-                    // Implement a wipe user feature
-                    return;
+                const userData = {
+                    userID,
+                    username: this.username,
+                    email: this.userEmail,
+                    weight: this.userWeight || 0,
+                    height: this.userHeight || 0,
+                    
                 }
 
-                let userModel = new UserModel();
-                const userID = userModel.id;
-                
-                let User = userModel.createUser(userID, this.userEmail, this.username, this.userWeight, this.userHeight);
-                this.userStore.signIn(User);
-
-                this.sendToHome();
-
-                this.userEmail = "";
-                this.username = "";
-                this.userWeight = "";
-                this.userHeight ="";
+                await userService.updateUser(userData)
+                this.sendToHome()
             },
         }
     }

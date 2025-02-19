@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 export class UserModel {
-    constructor(username, email, weight = 0, height = 0, workoutHistory = [], personalBests = {}, id = uuidv4()) {
+    constructor(id, username, email, weight = 0, height = 0, workoutHistory = [], personalBests = {}) {
         this.id = id;
         this.username = username;
         this.email = email;

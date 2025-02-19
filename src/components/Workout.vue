@@ -2,9 +2,9 @@
     <div v-if="!isWorkoutFinished" class="workout-container">
         <span class="workout-name">{{ workoutCopy.name }}</span>
         <ul>
-            <li class="top-info-item">Start: {{ workoutCopy.date }}</li>
-            <li class="top-info-item">Duration: {{ workoutCopy.duration }}</li>
-            <li class="top-info-item">Exercises: {{ workoutCopy.exercises.length }}</li>
+            <li class="top-info-item"><h1>Start:</h1> {{ workoutCopy.date }}</li>
+            <li class="top-info-item"><h1>Duration:</h1> {{ workoutCopy.duration }}</li>
+            <li class="top-info-item"><h1>Exercises:</h1> {{ workoutCopy.exercises.length }}</li>
         </ul>
 
         <div class="exercisesContainer">
@@ -80,7 +80,7 @@ export default{
 
 .workout-container{
     margin: 2rem auto;
-    width: 100%;
+    width: 90%;
     background-color: rgba(18, 41, 43, 0.95);
     border-radius: 30px;
     padding: 2rem;

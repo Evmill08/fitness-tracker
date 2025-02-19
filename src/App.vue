@@ -1,23 +1,32 @@
 <template>
   <div class="app-container">
-      <Header class="header"></Header>
-      <div class="content-wrapper">
-          <MainNav :pages="pagesList" class="nav"/>
-          <main class="main-content">
-              <router-view v-if="isAuthenticated"></router-view>
-              <LoginView v-else />
-          </main>
-      </div>
+    <Header class="header"></Header>
+    <div class="content-wrapper">
+      <MainNav :pages="pagesList" class="nav"/>
+      <main class="main-content">
+        <Suspense>
+          <template #default>
+            <router-view v-if="isAuthenticated"></router-view>
+            <LoginView v-else />
+          </template>
+          <template #fallback>
+            <div>Loading...</div>
+          </template>
+        </Suspense>
+      </main>
+    </div>
   </div>
 </template>
 
 <script>
 
-import MainNav from './components/MainNav.vue';
-import Header from './components/Header.vue';
-import { useUserStore } from './store/user_store';
-import LoginView from './views/LoginView.vue';
-import { computed } from 'vue';
+import { computed } from 'vue'
+import MainNav from './components/MainNav.vue'
+import Header from './components/Header.vue'
+import LoginView from './views/LoginView.vue'
+import { userService } from './services/userServices'
+import { userStore } from './stores/userStore'
+
 
 export default {
   components: {
@@ -26,8 +35,13 @@ export default {
     LoginView
   },
   setup () {
-    const userStore = useUserStore();
-    const isAuthenticated = computed(() => userStore.user != null);
+    const isAuthenticated = computed(() => {
+      return userStore.state.currentUser?.username?.length > 0
+    })
+
+    ;(async () => {
+      await userService.getUser()
+    })()
 
     return {
       isAuthenticated,
