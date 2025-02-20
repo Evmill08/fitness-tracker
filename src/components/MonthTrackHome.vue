@@ -1,7 +1,7 @@
 <template>
     <div class="month-track">
         <h1 class="month-title">This Month</h1>
-        <router-link to="/workout" class="workout-stats-link">
+        <router-link to="/stats" class="workout-stats-link">
             <div class="workout-stats">
                 <ul>
                     <li v-for="(stat, index) in stats"

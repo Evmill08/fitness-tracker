@@ -6,6 +6,8 @@
                 v-for="exercise in exercises"
                 :key="exercise.id"
                 :exercise="exercise"
+                @save="handleSave"
+                @add-to-workout="handleAddToWorkout"
             />
         </div>
     </div>
@@ -66,10 +68,18 @@ export default {
                     restTime: "4 Minutes"
                 }
             ]
+        }, 
+
+        handleSave(updatedExercise) {
+            // Handle saving the updated exercise
+            console.log(updatedExercise)
+        },
+    
+        handleAddToWorkout(exercise) {
+            // Handle adding to workout
+            console.log("Adding to workout:", exercise)
         }
     }
-
-
 }
 </script>
 
@@ -78,19 +88,22 @@ export default {
     text-align: center;
     color: black;
     margin: 20px 0;
+    color: white;
+    background-color: rgb(17, 17, 17);
 }
 
 .exercise-view{
     width: 90%;
     margin-left: 5%;
-    background-color: rgba(18, 41, 43, 0.95);
     border-radius: 20px;
 }
 
 .exercises-container {
+    border-radius: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
-    padding: 20px;
+    padding: 20px;    
+    background-color: rgba(18, 41, 43, 0.95);
 }
 </style>
